@@ -1,9 +1,10 @@
+
 type BadgeProps = {
-    label: string;
     color?: string;
+    children?: React.ReactNode;
 };
 
-const Badge = ({ label, color = 'gray' }: BadgeProps) => {
+const Badge = ({ color = 'gray', children }: BadgeProps) => {
     const colorClasses: Record<string, string> = {
         gray: 'bg-recipify-primary-500 text-white ring-gray-500/10',
         blue: 'bg-blue-50 text-blue-600 ring-blue-500/10',
@@ -15,7 +16,7 @@ const Badge = ({ label, color = 'gray' }: BadgeProps) => {
 
     return (
         <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${badgeClass}`}>
-            {label}
+            {children}
         </span>
     );
 };
