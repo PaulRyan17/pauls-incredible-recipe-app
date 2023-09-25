@@ -31,11 +31,11 @@ const RecipeFormPage = () => {
                 <>
                     <Divider className="my-4" />
                     <p className="text-lg text-gray-600 mb-2">
-                       Now we just need some more info
+                       Below are some optional fields
                     </p>
                     <div className="flex flex-col gap-5">
                         <CookingTimeSection selectedCookingTime={selectedCookingTime} dispatch={dispatch} />
-                        <NumIngredientsSection selectedNumIngredients={numberOfIngredients} dispatch={dispatch} />
+                        <NumIngredientsSection selectedNumIngredients={numberOfIngredients} dispatch={dispatch} selectedIngredientsLength={selectedIngredients.length} />
                         <MealTypeSection selectedMealType={selectedMealType} dispatch={dispatch} />
                         {/* <Summary
                             selectedIngredients={state.selectedIngredients}

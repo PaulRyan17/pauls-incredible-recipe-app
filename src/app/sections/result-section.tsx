@@ -9,7 +9,7 @@ interface RecipeResultPageProps {
     selectedIngredients: string[];
     selectedQuantities: Record<string, number>;
     selectedMealType: string;
-    selectedCookingTime: string;
+    selectedCookingTime: number;
     numberOfIngredients: number;
 }
 
@@ -22,6 +22,12 @@ const RecipeResultPage: React.FC<RecipeResultPageProps> = ({
 }) => {
     // get the recipes based on the main ingredient - this will also give us meals ids
     const { mealDetails, loading, error } = useMeals(selectedIngredients[0]);
+    console.log('state')
+    console.log(selectedIngredients,
+        selectedQuantities,
+        selectedMealType,
+        selectedCookingTime,
+        numberOfIngredients)
     console.log('meal details are ', mealDetails);
     // Use the useFilterRecipes hook to filter the recipes based on selected criteria
     const filteredRecipes = useFilterRecipes(

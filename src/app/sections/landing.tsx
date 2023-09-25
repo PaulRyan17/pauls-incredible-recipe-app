@@ -13,7 +13,7 @@ const LandingPage = () => {
           Cooking made easy! Find and create amazing dishes with ingredients you have at home.
         </p>
         <Link href="/recipe-form">
-          <Button type="primary">
+          <Button>
             Start Cooking
           </Button>
         </Link>

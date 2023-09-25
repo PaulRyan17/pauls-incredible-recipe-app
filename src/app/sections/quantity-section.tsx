@@ -1,14 +1,10 @@
-import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
-import Badge from "../components/badge";
+import React, { useState, useRef } from "react";
 import Button from "../components/button";
 import Input from "../components/input";
-import { gsap } from "gsap";
-import { useFadeInAnimation } from '../hooks/useFadeAnimation'; // Adjust the import path
-
 
 interface QuantitySectionProps {
     ingredients: string[];
-    dispatch: React.Dispatch<any>; // Update with your specific action type
+    dispatch: React.Dispatch<any>;
 }
 
 const QuantitySection: React.FC<QuantitySectionProps> = ({ ingredients, dispatch }) => {
@@ -20,9 +16,6 @@ const QuantitySection: React.FC<QuantitySectionProps> = ({ ingredients, dispatch
             ...prevQuantities,
             [ingredient]: quantity,
         }));
-
-        // Dispatch an action to update quantities in the parent component's state
-        // dispatch({ type: "SET_QUANTITY", payload: { ingredient, quantity } });
     };
 
     const handleNextClick = () => {
@@ -30,12 +23,15 @@ const QuantitySection: React.FC<QuantitySectionProps> = ({ ingredients, dispatch
         dispatch({ type: "SET_ALL_QUANTITIES", payload: selectedQuantities });
     };
 
+    // Check if all ingredients have valid quantities
+    const allIngredientsHaveQuantities = ingredients.every(ingredient => selectedQuantities[ingredient] !== '');
+
     return (
         <div className="flex flex-col" ref={quantitySection}>
             <p className="text-lg text-gray-600 mb-2">
                 Let's specify the quantity of each ingredient you have.
             </p>
-            <p className="text-lg text-gray-600 mb-3">
+            <p className="text-md text-gray-600 mb-3">
                 Simply select the quantity for each ingredient you've chosen.
             </p>
             {ingredients.map((ingredient, index) => (
@@ -44,26 +40,19 @@ const QuantitySection: React.FC<QuantitySectionProps> = ({ ingredients, dispatch
                     <Input
                         label={`Quantity of ${ingredient}`}
                         placeholder="Enter quantity"
-                        value={selectedQuantities[ingredient] || ""}
+                        value={selectedQuantities[ingredient]}
+                        type="number"
                         onChange={(e: { target: { value: string; }; }) => handleQuantityChange(ingredient, e.target.value)}
                     />
                 </div>
             ))}
-            <div className="flex gap-2 flex-wrap mt-2">
-                {Object.entries(selectedQuantities).map(([ingredient, quantity], index) => (
-                    <Badge key={index}>
-                        {`${quantity} ${ingredient}`}
-                    </Badge>
-                ))}
-            </div>
             <div className="flex justify-end mt-4">
                 <Button
-                    disabled={Object.keys(selectedQuantities).length === 0}
+                    disabled={!allIngredientsHaveQuantities}
                     onClick={handleNextClick}
                 >
                     Next
                 </Button>
-                {/* You can add a "Back" button if needed */}
             </div>
         </div>
     );

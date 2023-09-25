@@ -19,9 +19,6 @@ const Slider: React.FC<SliderProps> = ({ label, min, max, initialValue, onChange
 
   return (
     <>
-      <label htmlFor="minmax-range" className="block mb-2 text-sm font-medium text-gray-900">
-        {label}
-      </label>
       <input
         id="minmax-range"
         type="range"
@@ -31,7 +28,7 @@ const Slider: React.FC<SliderProps> = ({ label, min, max, initialValue, onChange
         onChange={handleSliderChange}
         className="w-full h-2 bg-recipify-primary-500 rounded-lg appearance-none cursor-pointer"
       />
-      {value}
+      <span className='text-gray-600'>{value} {label}</span>
     </>
   );
 };

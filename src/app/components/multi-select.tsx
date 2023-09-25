@@ -1,8 +1,8 @@
-import { FC, Fragment, useState, useRef, useEffect } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/20/solid'
 
-interface MultiSelectProps<T extends { toString(): string }> {
+
+interface MultiSelectProps<T> {
     options: T[]
     selected: T[]
     onChange: (selected: T[]) => void
@@ -19,7 +19,7 @@ const MultiSelect = <T,>({
     selected,
     onChange,
     label = '',
-    optionLabel = (item: T) => item.toString(),
+    optionLabel = (item: T) => (item as any).toString(),
 }: MultiSelectProps<T>) => {
     const [inputValue, setInputValue] = useState('')
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -65,6 +65,8 @@ const MultiSelect = <T,>({
         }
     }
 
+    const isItemSelected = (item: T) => selected.includes(item)
+
     return (
         <Listbox as="div" className="space-y-4" ref={dropdownRef}>
             {label && (
@@ -98,27 +100,22 @@ const MultiSelect = <T,>({
                     >
                         {filteredOptions.map((item) => (
                             <Listbox.Option key={optionLabel(item)} value={item}>
-                                {({ active, selected: itemSelected }) => (
+                                {({ selected: itemSelected }) => (
                                     <div
                                         onClick={() => toggleSelection(item)}
                                         className={classNames(
-                                            active ? 'bg-indigo-100' : '',
+                                            isItemSelected(item) ? 'bg-recipify-primary-500' : '',
                                             'cursor-pointer select-none relative px-4 py-2'
                                         )}
                                     >
                                         <div className="flex items-center">
-                                            <span className="font-normal text-gray-900">{optionLabel(item)}</span>
-                                        </div>
-                                        {itemSelected && (
-                                            <span
-                                                className={classNames(
-                                                    active ? 'text-indigo-600' : 'text-indigo-400',
-                                                    'absolute inset-y-0 right-0 flex items-center pr-3'
-                                                )}
-                                            >
-                                                <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                            <span className={classNames(
+                                                'font-normal text-gray-900',
+                                                isItemSelected(item) ? 'text-white' : ''
+                                            )}>
+                                                {optionLabel(item)}
                                             </span>
-                                        )}
+                                        </div>
                                     </div>
                                 )}
                             </Listbox.Option>

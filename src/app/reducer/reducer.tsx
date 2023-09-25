@@ -3,12 +3,12 @@ type State = {
     selectedIngredients: string[];
     selectedQuantities: Record<string, number>;
     selectedMealType: string;
-    selectedCookingTime: string;
+    selectedCookingTime: number;
     numberOfIngredients: number;
 };
 
 
-type Action =
+export type Action =
     | { type: "ADD_INGREDIENT"; payload: Array<string> }
     | { type: "REMOVE_INGREDIENT"; payload: string }
     | { type: "SET_MEAL_TYPE"; payload: string }
@@ -20,7 +20,7 @@ export const initialState: State = {
     selectedIngredients: [],
     selectedQuantities: {},
     selectedMealType: "",
-    selectedCookingTime: "",
+    selectedCookingTime: 0,
     numberOfIngredients: 0,
 };
 

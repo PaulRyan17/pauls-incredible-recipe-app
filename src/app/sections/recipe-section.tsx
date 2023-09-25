@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import useIngredients from "../hooks/useIngredients";
 import MultiSelect from "../components/multi-select";
 import Badge from "../components/badge";
-import Button from "../components/button";
 
 interface RecipeSectionProps {
     selectedIngredients: string[];
@@ -10,17 +9,10 @@ interface RecipeSectionProps {
 }
 
 const RecipeSection: React.FC<RecipeSectionProps> = ({ selectedIngredients, dispatch }) => {
-    const { ingredients, loading, error } = useIngredients();
-    const [localSelectedIngredients, setLocalSelectedIngredients] = useState<string[]>([]);
+    const { ingredients } = useIngredients();
 
     const handleMultiSelectChange = (updatedIngredients: string[]) => {
-        // Update local state without dispatching
-        setLocalSelectedIngredients(updatedIngredients);
-    };
-
-    const handleNextClick = () => {
-        // Dispatch selected ingredients when "Next" is clicked
-        dispatch({ type: "ADD_INGREDIENT", payload: localSelectedIngredients });
+        dispatch({ type: "ADD_INGREDIENT", payload: updatedIngredients });
     };
 
     return (
@@ -31,18 +23,13 @@ const RecipeSection: React.FC<RecipeSectionProps> = ({ selectedIngredients, disp
             <p className="text-md text-gray-600 mb-3">
                 Simply select your ingredients, the first ingredient will be your main ingredient.
             </p>
-            <MultiSelect options={ingredients} selected={localSelectedIngredients} onChange={handleMultiSelectChange} />
+            <MultiSelect options={ingredients} selected={selectedIngredients} onChange={handleMultiSelectChange} />
             <div className="flex gap-2 flex-wrap mt-2">
-                {localSelectedIngredients.map((ingredient, index) => (
+                {selectedIngredients.map((ingredient, index) => (
                     <Badge key={index}>
                         {ingredient}
                     </Badge>
                 ))}
-            </div>
-            <div className="flex justify-end">
-                <Button disabled={!localSelectedIngredients.length} onClick={handleNextClick}>
-                    Next
-                </Button>
             </div>
         </div>
     );

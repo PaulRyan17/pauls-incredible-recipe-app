@@ -18,7 +18,7 @@ const MealTypeSection: React.FC<MealTypeSectionProps> = ({ selectedMealType, dis
 
     return (
         <div className="flex flex-col">
-            <p className="text-lg text-gray-600 mb-2">
+            <p className="text-md text-gray-600 mb-2">
                 Let's choose a meal type for your recipes.
             </p>
             <div className="flex gap-2 mt-2">

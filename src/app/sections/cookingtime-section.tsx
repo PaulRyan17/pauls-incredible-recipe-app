@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 import Slider from "../components/slider";
-import Button from "../components/button";
 
 interface CookingTimeSectionProps {
-    selectedCookingTime: string;
+    selectedCookingTime: number;
     dispatch: React.Dispatch<any>; // Update with your specific action type
 }
 
 const CookingTimeSection: React.FC<CookingTimeSectionProps> = ({ selectedCookingTime, dispatch }) => {
-    const [cookingTime, setCookingTime] = useState<string>(selectedCookingTime);
+    const [cookingTime, setCookingTime] = useState<number>(selectedCookingTime);
 
-    const handleCookingTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        setCookingTime(value);
-        dispatch({ type: "SET_COOKING_TIME", payload: value });
+    const handleCookingTimeChange = (cookingTime: number) => {
+        setCookingTime(cookingTime);
+        dispatch({ type: "SET_COOKING_TIME", payload: cookingTime });
     };
 
     return (
         <div className="flex flex-col">
-            <p className="text-lg text-gray-600 mb-2">
+            <p className="text-md text-gray-600 mb-2">
                 Let's specify the maximum cooking time for your recipes (in minutes).
             </p>
             <div className="mt-2">
                 <Slider
+                    label="minutes"
                     min={0}
                     max={120}
-                    value={cookingTime}
+                    initialValue={cookingTime || 60}
                     onChange={handleCookingTimeChange}
                 />
             </div>
