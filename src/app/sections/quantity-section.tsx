@@ -29,10 +29,10 @@ const QuantitySection: React.FC<QuantitySectionProps> = ({ ingredients, dispatch
     return (
         <div className="flex flex-col" ref={quantitySection}>
             <p className="text-lg text-gray-600 mb-2">
-                Let's specify the quantity of each ingredient you have.
+                Let&rsquo;s specify the quantity of each ingredient you have.
             </p>
             <p className="text-md text-gray-600 mb-3">
-                Simply select the quantity for each ingredient you've chosen.
+                Simply select the quantity for each ingredient you&rsquo;ve chosen.
             </p>
             {ingredients.map((ingredient, index) => (
                 <div key={index} className="mb-3">

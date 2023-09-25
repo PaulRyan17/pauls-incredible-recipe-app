@@ -47,7 +47,7 @@ export function recipeFormReducer(state: State, action: Action): State {
         case "SET_COOKING_TIME":
             return {
                 ...state,
-                selectedCookingTime: action.payload, // Update the cooking time
+                selectedCookingTime: parseInt(action.payload), // Update the cooking time
             };
         case "SET_NUMBER_OF_INGREDIENTS":
             return {

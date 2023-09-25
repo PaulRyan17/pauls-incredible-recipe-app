@@ -17,7 +17,7 @@ const CookingTimeSection: React.FC<CookingTimeSectionProps> = ({ selectedCooking
     return (
         <div className="flex flex-col">
             <p className="text-md text-gray-600 mb-2">
-                Let's specify the maximum cooking time for your recipes (in minutes).
+                Let&rsquo;s specify the maximum cooking time for your recipes (in minutes).
             </p>
             <div className="mt-2">
                 <Slider

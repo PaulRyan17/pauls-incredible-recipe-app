@@ -43,7 +43,7 @@ const RecipeResultPage: React.FC<RecipeResultPageProps> = ({
             <div className="flex flex-col gap items-center">
                 <RecipifyLogo />
                 <p className="text-xl text-gray-600 mb-5">
-                    Let's get cooking!
+                    Let&rsquo;s get cooking!
                 </p>
             </div>
             <Divider className="my-4" />

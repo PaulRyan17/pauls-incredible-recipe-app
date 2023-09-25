@@ -1,10 +1,8 @@
 import React, { ReactNode, ButtonHTMLAttributes } from 'react';
 
-type ButtonType = 'primary' | 'secondary';
-
 type ButtonProps = {
   children: ReactNode;
-  type?: ButtonType;
+  buttonType?: string;
   disabled?: boolean; // Add a disabled prop
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
