@@ -6,10 +6,10 @@ type ButtonProps = {
   disabled?: boolean; // Add a disabled prop
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: React.FC<ButtonProps> = ({ children, type = 'primary', disabled = false, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ children, buttonType = 'primary', disabled = false, ...props }) => {
   const buttonClasses = disabled
     ? 'rounded-md bg-gray-400 px-3.5 py-2.5 text-sm font-semibold text-gray-600 cursor-not-allowed'
-    : type === 'primary'
+    : buttonType === 'primary'
     ? 'rounded-md bg-recipify-primary-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-recipify-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-recipify-primary-400'
     : 'rounded-md bg-gray-300 px-3.5 py-2.5 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400';
 
