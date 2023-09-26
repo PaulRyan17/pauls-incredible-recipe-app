@@ -5,7 +5,6 @@ import useIngredients from '../hooks/useIngredients';
 
 const IngredientList: React.FC = () => {
   const { ingredients, loading, error } = useIngredients();
-  console.log('ingredients', ingredients)
 
   if (loading) {
     return <div>Loading...</div>;

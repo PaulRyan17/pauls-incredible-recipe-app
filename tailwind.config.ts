@@ -14,6 +14,9 @@ const config: Config = {
         },
         'recipify-secondary': {
           500: '#323643',
+        },
+        'recipify-dark': {
+          500: '#255153',
         }
       },
       backgroundImage: {

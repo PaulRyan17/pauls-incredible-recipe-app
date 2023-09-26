@@ -5,7 +5,7 @@ interface SummaryProps {
     selectedIngredients: string[];
     selectedQuantities: Record<string, number>;
     selectedMealType: string;
-    selectedCookingTime: string;
+    selectedCookingTime: number;
     selectedNumIngredients: number;
 }
 

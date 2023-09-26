@@ -26,9 +26,9 @@ const Slider: React.FC<SliderProps> = ({ label, min, max, initialValue, onChange
         max={max}
         value={value}
         onChange={handleSliderChange}
-        className="w-full h-2 bg-recipify-primary-500 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 bg-white rounded-lg appearance-none cursor-pointer"
       />
-      <span className='text-gray-600'>{value} {label}</span>
+      <span className='text-white'>{value} {label}</span>
     </>
   );
 };

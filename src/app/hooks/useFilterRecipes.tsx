@@ -4,7 +4,8 @@ export const useFilterRecipes = (
     recipes: any[], // Replace 'any[]' with the actual type of your recipes
     selectedIngredients: string[],
     selectedCookingTime: number,
-    numberOfIngredients: number
+    numberOfIngredients: number,
+    selectedMealType: string
 ) => {
     const filteredRecipes = useMemo(() => {
         return recipes.filter((recipe) => {
@@ -13,23 +14,24 @@ export const useFilterRecipes = (
                 .filter((key) => key.startsWith('strIngredient'))
                 .map((key) => recipe[key])
                 .filter(Boolean); // Filter out empty values
-            console.log('recipeIngredients', recipeIngredients)
-
-            // Check if the cooking time matches
-            // const cookingTimeMatches = recipe.strInstructions.includes(selectedCookingTime);
-
-            // Check if the number of ingredients matches
-            // const numIngredientsMatches = recipeIngredients.length === numberOfIngredients;
 
             // Check if the recipe contains all selected ingredients
             const containsAllIngredients = selectedIngredients.every((ingredient) =>
                 recipeIngredients.includes(ingredient)
             );
 
-            // return containsAllIngredients && cookingTimeMatches && numIngredientsMatches;
-            return containsAllIngredients;
+            // Check if the meal type matches (if selected)
+            const mealTypeMatches = !selectedMealType || recipe.mealType === selectedMealType;
+
+            // Check if the cooking time matches or is greater
+            const cookingTimeMatches = selectedCookingTime >= recipe.cookingTime;
+
+            // Check if the number of ingredients is less than or equal to the selected number
+            const numberOfIngredientsMatches = recipeIngredients.length <= numberOfIngredients;
+
+            return containsAllIngredients && mealTypeMatches && cookingTimeMatches && numberOfIngredientsMatches;
         });
-    }, [recipes, selectedIngredients, selectedCookingTime, numberOfIngredients]);
+    }, [recipes, selectedIngredients, selectedCookingTime, numberOfIngredients, selectedMealType]);
 
     return filteredRecipes;
 };

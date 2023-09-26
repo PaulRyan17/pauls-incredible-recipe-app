@@ -4,6 +4,8 @@ type Recipe = {
     strMeal: string;
     strMealThumb: string;
     idMeal: string;
+    mealType: string;
+    cookingTime: number;
 };
 
 export const useMeals = (ingredient: string) => {
@@ -11,6 +13,16 @@ export const useMeals = (ingredient: string) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [mealDetails, setMealDetails] = useState<any[]>([]);
+
+    // Function to randomize mealType and cookingTime
+    const randomizeMealTypeAndTime = () => {
+        const mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert'];
+        const cookingTimes = [30, 60, 120];
+        return {
+            mealType: mealTypes[Math.floor(Math.random() * mealTypes.length)],
+            cookingTime: cookingTimes[Math.floor(Math.random() * cookingTimes.length)],
+        };
+    };
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -23,14 +35,23 @@ export const useMeals = (ingredient: string) => {
                 }
                 const data = await response.json();
                 const fetchedRecipes = data.meals || [];
-                setRecipes(fetchedRecipes);
+
+                // Add mealType and cookingTime to each recipe as the API does not provide this information
+                // at least not in a standard way
+                const recipesWithDetails: Recipe[] = fetchedRecipes.map((recipe: { idMeal: any; }) => {
+                    const { mealType, cookingTime } = randomizeMealTypeAndTime();
+                    return { ...recipe, mealType, cookingTime };
+                });
+
+                setRecipes(recipesWithDetails);
                 setLoading(false);
                 setError(null);
 
                 // Extract meal IDs from fetched recipes
-                const mealIds = fetchedRecipes.map((recipe: { idMeal: any; }) => recipe.idMeal);
+                const mealIds = recipesWithDetails.map((recipe: { idMeal: any; }) => recipe.idMeal);
 
                 // Fetch meal details based on meal IDs
+                // Fetch meal details based on meal IDs and add mealType and cookingTime
                 if (mealIds.length > 0) {
                     const promises = mealIds.map(async (mealId: any) => {
                         const mealResponse = await fetch(
@@ -40,7 +61,8 @@ export const useMeals = (ingredient: string) => {
                             throw new Error('Failed to fetch meal details');
                         }
                         const mealData = await mealResponse.json();
-                        return mealData.meals[0]; // Assuming there is only one meal for a given ID
+                        const { mealType, cookingTime } = randomizeMealTypeAndTime();
+                        return { ...mealData.meals[0], mealType, cookingTime };
                     });
 
                     const mealDetails = await Promise.all(promises);

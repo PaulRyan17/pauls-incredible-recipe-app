@@ -17,10 +17,10 @@ const RecipeSection: React.FC<RecipeSectionProps> = ({ selectedIngredients, disp
 
     return (
         <div className="flex flex-col">
-            <p className="text-lg text-gray-600 mb-2">
+            <p className="text-lg text-white mb-2">
                 Let&rsquo;s get started by finding out what ingredients you have available.
             </p>
-            <p className="text-md text-gray-600 mb-3">
+            <p className="text-md text-white mb-3">
                 Simply select your ingredients, the first ingredient will be your main ingredient.
             </p>
             <MultiSelect options={ingredients} selected={selectedIngredients} onChange={handleMultiSelectChange} />

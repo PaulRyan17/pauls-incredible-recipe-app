@@ -12,7 +12,7 @@ const LandingPage = () => {
         <p className="mb-12 text-lg text-gray-700">
           Cooking made easy! Find and create amazing dishes with ingredients you have at home.
         </p>
-        <Link href="/recipe-form">
+        <Link href="/recipe-builder">
           <Button>
             Start Cooking
           </Button>

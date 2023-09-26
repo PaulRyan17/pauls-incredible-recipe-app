@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Badge from '../components/badge';
-import Modal from '../components/modal';
-import Link from 'next/link';
 
 type Meal = {
     strMeal: string;
@@ -13,81 +11,97 @@ type Meal = {
     strInstructions: string;
     strSource: string;
     strYoutube: string;
+    [key: string]: string;
+    mealType: string;
+    cookingTime: any;
 };
 
 interface RecipeListProps {
     meals: Meal[];
+    selectedIngredients: string[];
+    selectedQuantities: Record<string, number>;
+    selectedMealType: string;
+    selectedCookingTime: number;
+    loading?: boolean;
 }
 
-const RecipeList: React.FC<RecipeListProps> = ({ meals }) => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null); // Store selected meal
-    const toggleModal = () => setIsOpen(!isOpen)
-
-    const openModal = (meal: Meal) => {
-        setSelectedMeal(meal);
-        setIsOpen(true);
-    };
-
-    const renderModal = () => {
-        console.log('called', selectedMeal)
-        if(selectedMeal && isOpen) {
-            return (
-                <Modal open={isOpen} onClose={toggleModal} title={selectedMeal.strMeal}>
-                    <div className='flex flex-col gap-3'>
-                        <img src={selectedMeal.strMealThumb} alt={selectedMeal.strMeal} className="w-full" />
-                        <div className='flex gap-2'>
-                            <Badge>{selectedMeal.strArea}</Badge>
-                            <Badge>{selectedMeal.strCategory}</Badge>
-                        </div>
-                        <blockquote className="text-md italic font-semibold text-gray-900">
-                            <p>{selectedMeal.strInstructions}</p>
-                        </blockquote>
-                        <Link href={selectedMeal.strSource}>
-                            <span className='text-blue-500'>Source</span>
-                        </Link>
-                        <Link href={selectedMeal.strYoutube}>
-                            <span className='text-blue-500'>Youtube</span>
-                        </Link>
-                    </div>
-                </Modal>
-            )
-        }
+const RecipeList: React.FC<RecipeListProps> = ({ meals, selectedIngredients, selectedQuantities, selectedMealType, selectedCookingTime, loading }) => {
+    if (loading) {
+        return (
+            <div>
+                Fetching delicious recipes...
+            </div>
+        )
     }
-
-
+    if  (!meals.length && selectedIngredients.length) {
+        return (
+            <div className='text-center mt-5 text-lg'>
+                Hmmm, looks like there are no recipes that match your criteria. Try changing your filters.
+            </div>
+        )
+    }
     return (
-        <> 
-            <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-                {meals.map((meal) => (
-                    <li key={meal.idMeal} className="relative">
-                        <div onClick={() => openModal(meal)} className="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+        <ul role="list" className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-1 sm:gap-x-6 lg:grid-cols-1 xl:gap-x-8">
+            {meals.map((meal) => (
+                <li key={meal.idMeal} className="relative">
+                    <div className="flex gap-5 group w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                        <div className="flex-shrink-0 w-1/3 relative h-40">
                             <img
                                 src={meal.strMealThumb}
                                 alt={meal.strMeal}
-                                className="pointer-events-none object-cover group-hover:opacity-75"
+                                className="pointer-events-none object-cover group-hover:opacity-75 absolute inset-0 w-full h-full"
+                                style={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
                             />
-                            <button type="button" className="absolute inset-0 focus:outline-none">
-                                <span className="sr-only">View details for {meal.strMeal}</span>
-                            </button>
                         </div>
-                        <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
-                            {meal.strMeal}
-                        </p>
-                        {meal.strTags && (
-                            <div className="mt-1 flex gap-2 flex-wrap">
-                                {meal.strTags.split(',').map((tag, index) => (
-                                    <Badge key={index}>
-                                        {tag.trim()}
-                                    </Badge>
-                                ))}
+                        <div className='flex flex-col p-2 gap-2'>
+                            <div>
+                                {meal.strMeal}
+                                {meal.strTags && (
+                                    <div className="mt-1 flex gap-2 flex-wrap">
+                                        {meal.strTags.split(',').map((tag, index) => (
+                                            <Badge key={index}>{tag.trim()}</Badge>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
-            {renderModal()}
-        </>
+                            <div>
+                                <div className='text-gray-500 mb-2'>Ingredients Needed</div>
+                                <div className='flex gap-2 flex-wrap'>
+                                    {/* Use a nested map to iterate through ingredients and measurements */}
+                                    {Array.from({ length: 20 }).map((_, index) => {
+                                        const ingredient = meal[`strIngredient${index + 1}`];
+                                        const measure = meal[`strMeasure${index + 1}`];
+                                        if (ingredient && measure) {
+                                            const lowercaseIngredient = ingredient.toLowerCase();
+                                            const isIngredientSelected = selectedIngredients.some(selectedIngredient =>
+                                                selectedIngredient.toLowerCase() === lowercaseIngredient
+                                            );
+                                            const isQuantityCorrect = selectedQuantities[ingredient] >= parseInt(measure,10);
+                                
+                                            let badgeColor = 'gray'; // Default to gray
+                                            if (isIngredientSelected && isQuantityCorrect) {
+                                                badgeColor = 'primary'; // Both correct ingredient and quantity
+                                            } else if (isIngredientSelected) {
+                                                badgeColor = 'orange'; // Correct ingredient but incorrect quantity
+                                            }
+                                
+                                            return (
+                                                <Badge color={badgeColor} key={index}>{`${measure} ${ingredient}`}</Badge>
+                                            );
+                                        }
+                                        return null;
+                                    })}
+                                </div>
+                            </div>
+                            <div className='flex gap-2 mt-5'>
+                                <Badge color={selectedCookingTime >= meal.cookingTime ? 'primary' : 'gray'}>{meal.cookingTime} minutes</Badge>
+                                <Badge color={selectedMealType === meal.mealType ? 'primary' : 'gray'}>{meal.mealType}</Badge>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            ))}
+        </ul>
     );
 };
 

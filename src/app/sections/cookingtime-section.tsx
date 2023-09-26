@@ -16,7 +16,7 @@ const CookingTimeSection: React.FC<CookingTimeSectionProps> = ({ selectedCooking
 
     return (
         <div className="flex flex-col">
-            <p className="text-md text-gray-600 mb-2">
+            <p className="text-md text-white mb-2">
                 Let&rsquo;s specify the maximum cooking time for your recipes (in minutes).
             </p>
             <div className="mt-2">
@@ -24,7 +24,7 @@ const CookingTimeSection: React.FC<CookingTimeSectionProps> = ({ selectedCooking
                     label="minutes"
                     min={0}
                     max={120}
-                    initialValue={cookingTime || 60}
+                    initialValue={cookingTime}
                     onChange={handleCookingTimeChange}
                 />
             </div>

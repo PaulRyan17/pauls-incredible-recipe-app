@@ -1,7 +1,7 @@
 import React from 'react';
 
 type InputProps = {
-    label: string;
+    label?: string;
     [key: string]: any;
     type: string;
 }
@@ -9,7 +9,7 @@ type InputProps = {
 const Input = ({ label, type, placeholder, ...rest }: InputProps) => {
     return (
         <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900">
+            <label className="block text-sm font-medium leading-6 text-white">
                 {label}
             </label>
             <div className="mt-2">

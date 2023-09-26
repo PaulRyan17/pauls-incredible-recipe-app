@@ -1,5 +1,5 @@
 // Define TypeScript types for state and actions
-type State = {
+export type State = {
     selectedIngredients: string[];
     selectedQuantities: Record<string, number>;
     selectedMealType: string;
@@ -19,9 +19,9 @@ export type Action =
 export const initialState: State = {
     selectedIngredients: [],
     selectedQuantities: {},
-    selectedMealType: "",
-    selectedCookingTime: 0,
-    numberOfIngredients: 0,
+    selectedMealType: "Lunch",
+    selectedCookingTime: 120,
+    numberOfIngredients: 20,
 };
 
 // Reducer function to handle state updates
