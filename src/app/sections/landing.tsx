@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../components/button';
-import RecipifyLogo from '../components/recipify-logo';
+import RecipifyLogo from '../components/logo';
 import Link from 'next/link'
 
 const LandingPage = () => {

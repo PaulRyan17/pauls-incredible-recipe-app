@@ -7,7 +7,6 @@ export type State = {
     numberOfIngredients: number;
 };
 
-
 export type Action =
     | { type: "ADD_INGREDIENT"; payload: Array<string> }
     | { type: "REMOVE_INGREDIENT"; payload: string }

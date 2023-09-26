@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useMeals } from '../hooks/useRecipe';
 import { useFilterRecipes } from '../hooks/useFilterRecipes';
 import RecipeList from './recipe-list';
-import RecipifyLogo from "../components/recipify-logo";
+import RecipifyLogo from "../components/logo";
 import Divider from "../components/divider";
 import Button from "../components/button";
 
