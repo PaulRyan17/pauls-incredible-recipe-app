@@ -1,5 +1,6 @@
 import React from 'react';
 import Badge from '../components/badge';
+import Link from 'next/link';
 
 type Meal = {
     strMeal: string;
@@ -55,7 +56,12 @@ const RecipeList: React.FC<RecipeListProps> = ({ meals, selectedIngredients, sel
                         </div>
                         <div className='flex flex-col p-2 gap-2'>
                             <div>
-                                {meal.strMeal}
+                                <div className='flex gap-3 items-center'>
+                                    {meal.strMeal}
+                                    <Link href={meal.strYoutube} target='_blank'>
+                                        <img src="youtube.svg" alt="youtube" className="w-5 h-5" />
+                                    </Link>
+                                </div>
                                 {meal.strTags && (
                                     <div className="mt-1 flex gap-2 flex-wrap">
                                         {meal.strTags.split(',').map((tag, index) => (
