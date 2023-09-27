@@ -5,7 +5,7 @@ import Badge from "../components/badge";
 
 interface RecipeSectionProps {
     selectedIngredients: string[];
-    dispatch: React.Dispatch<any>; // Update with your specific action type
+    dispatch: React.Dispatch<any>;
 }
 
 const RecipeSection: React.FC<RecipeSectionProps> = ({ selectedIngredients, dispatch }) => {

@@ -13,7 +13,7 @@ const Badge = ({ color = 'primary', children }: BadgeProps) => {
         orange: 'bg-orange-500 text-white ring-orange-500/10', 
     };
 
-    // Get the appropriate class based on the selected color or use the default gray
+    // Get the appropriate class based on the selected color or use the default primary
     const badgeClass = colorClasses[color] || colorClasses.gray;
 
     return (

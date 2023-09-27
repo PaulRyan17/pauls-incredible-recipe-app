@@ -3,7 +3,7 @@ import Input from "../components/input";
 
 interface NumIngredientsSectionProps {
     selectedNumIngredients: number;
-    dispatch: React.Dispatch<any>; // Update with your specific action type
+    dispatch: React.Dispatch<any>;
 }
 
 const NumIngredientsSection: React.FC<NumIngredientsSectionProps> = ({ selectedNumIngredients, dispatch }) => {

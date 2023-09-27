@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 export const useFilterRecipes = (
-    recipes: any[], // Replace 'any[]' with the actual type of your recipes
+    recipes: any[],
     selectedIngredients: string[],
     selectedCookingTime: number,
     numberOfIngredients: number,

@@ -7,8 +7,6 @@ import QuantitySection from "../sections/quantity-section";
 import MealTypeSection from "../sections/mealtype-section";
 import CookingTimeSection from "../sections/cookingtime-section";
 import NumIngredientsSection from "../sections/numberingredients-section";
-import RecipeResultPage from "../sections/result-section";
-import Button from "../components/button";
 
 import { State } from "../reducer/reducer";
 
@@ -18,7 +16,7 @@ interface RecipeFormProps {
 }
 
 const RecipeForm = ({ state, dispatch }: RecipeFormProps) => {
-    const { selectedIngredients, selectedQuantities, selectedMealType, selectedCookingTime, numberOfIngredients } = state;
+    const { selectedIngredients, selectedMealType, selectedCookingTime, numberOfIngredients } = state;
 
     const buildRecipeFormFields = () => {
         if(selectedIngredients.length) {

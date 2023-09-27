@@ -14,9 +14,7 @@ const RecipeFormPage = () => {
     };
     return (
         <div>
-            {/* Static sidebar for desktop */}
             <div className="lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-[40rem] lg:flex-col">
-                {/* Sidebar component, swap this element with another sidebar if you like */}
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-recipify-dark-500 px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center text-white font-mono">
                         RECIPIFY

@@ -1,11 +1,8 @@
-"use client"
-import React, { useState } from 'react';
+import React from 'react';
 import { useMeals } from '../hooks/useRecipe';
 import { useFilterRecipes } from '../hooks/useFilterRecipes';
 import RecipeList from './recipe-list';
-import RecipifyLogo from "../components/logo";
 import Divider from "../components/divider";
-import Button from "../components/button";
 
 interface RecipeResultPageProps {
     selectedIngredients: string[];
@@ -23,15 +20,30 @@ const RecipeResultPage: React.FC<RecipeResultPageProps> = ({
     numberOfIngredients,
 }) => {
     // get the recipes based on the main ingredient - this will also give us meals ids
-    const { mealDetails, loading, error } = useMeals(selectedIngredients[0]);
+    const { mealDetails, loading } = useMeals(selectedIngredients[0]);
     // Use the useFilterRecipes hook to filter the recipes based on selected criteria
     const filteredRecipes = useFilterRecipes(
-        mealDetails, // You may need to replace 'mealDetails' with the actual data structure
+        mealDetails,
         selectedIngredients,
         selectedCookingTime,
         numberOfIngredients,
         selectedMealType
     );
+
+    const renderRecipeList = () => {
+        if(selectedIngredients.length) {
+            return (
+                <RecipeList
+                    meals={filteredRecipes}
+                    selectedIngredients={selectedIngredients}
+                    selectedQuantities={selectedQuantities}
+                    selectedMealType={selectedMealType}
+                    selectedCookingTime={selectedCookingTime}
+                    loading={loading}
+                />
+            )
+        }
+    }
 
     return (
         <div>
@@ -41,14 +53,7 @@ const RecipeResultPage: React.FC<RecipeResultPageProps> = ({
                 </p>
             </div>
             <Divider className="my-4" />
-            <RecipeList
-                meals={filteredRecipes}
-                selectedIngredients={selectedIngredients}
-                selectedQuantities={selectedQuantities}
-                selectedMealType={selectedMealType}
-                selectedCookingTime={selectedCookingTime}
-                loading={loading}
-            />
+            {renderRecipeList()}
         </div>
     );
 };

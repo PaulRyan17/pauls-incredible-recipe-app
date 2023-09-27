@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../components/button";
 
 interface MealTypeSectionProps {
     selectedMealType: string;
-    dispatch: React.Dispatch<any>; // Update with your specific action type
+    dispatch: React.Dispatch<any>;
 }
 
 const MealTypeSection: React.FC<MealTypeSectionProps> = ({ selectedMealType, dispatch }) => {
